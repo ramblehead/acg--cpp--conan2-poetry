@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Hey Emacs, this is -*- coding: utf-8; mode: python -*-
+# Hey Emacs, this is -*- coding: utf-8 -*-
 
 from rh_template import expand_and_implode
 

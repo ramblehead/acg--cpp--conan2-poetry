@@ -1,4 +1,4 @@
-# Hey Emacs, this is -*- coding: utf-8; mode: python -*-
+# Hey Emacs, this is -*- coding: utf-8 -*-
 
 from .config import Config
 from .expand import expand, expand_and_implode
