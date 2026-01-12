@@ -15,16 +15,16 @@ lint = "poetry_utils.scripts:lint"
 cdaq-link = "cdaq_link.start:start"
 
 [tool.poetry.dependencies]
-python = "^3.11"
-conan = "^2.0.9"
-numpy = "^1.25.2"
+python = ">=3.11,<3.15"
+conan = "^2.24.0"
+numpy = "^2.4.1"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.7.0"
-pyright = "^1.1.318"
-ruff = "^0.0.276"
-mypy = "^1.4.1"
-ruff-lsp = "^0.0.35"
+black = "^25.12.0"
+basedpyright = "^1.37.1"
+ruff = "^0.14.11"
+mypy = "^1.19.1"
+ruff-lsp = "^0.0.62"
 
 [tool.ruff]
 select = ["ALL"]
