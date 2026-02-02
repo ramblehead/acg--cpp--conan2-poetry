@@ -7,9 +7,13 @@
 readonly PROJECT_NAME="${project_name}"
 
 readonly COMPILER=clang
-readonly COMPILER_VERSION=16
-readonly CLANG_CHECK_VERSION=17
-readonly CLANG_TIDY_VERSION=17
+readonly COMPILER_VERSION=20
+readonly COMPILER_VERSION_SUFFIX=
+readonly CLANG_CHECK_VERSION_SUFFIX=
+readonly CLANG_TIDY_VERSION_SUFFIX=
+# readonly COMPILER_VERSION_SUFFIX=-16
+# readonly CLANG_CHECK_VERSION_SUFFIX=-17
+# readonly CLANG_TIDY_VERSION_SUFFIX=-17
 
 PRJ_ROOT_PATH="<%text>${SDPATH}</%text>/.."
 PRJ_ROOT_PATH="$(cd "<%text>${PRJ_ROOT_PATH}</%text>" && pwd)"

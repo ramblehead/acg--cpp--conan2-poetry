@@ -1,0 +1,25 @@
+[settings]
+arch=x86_64
+# build_type=Release
+# build_type=MinSizeRel
+build_type=RelWithDebInfo
+compiler=clang
+compiler.cppstd=gnu23
+# stdlib is selected at env level
+# compiler.libcxx=libc++
+compiler.version=20
+# compiler.sanitizer=Address
+os=Linux
+
+# [options]
+# boost/*:without_stacktrace=True
+# boost/*:without_python=False
+
+[buildenv]
+LDFLAGS=-fuse-ld=lld
+# CC=clang-20
+# CXX=clang++-20
+# LD=ld.lld
+# CXXFLAGS=-fsanitize=address
+# CFLAGS=-fsanitize=address
+# LDFLAGS=-fsanitize=address

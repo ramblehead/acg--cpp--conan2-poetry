@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -eu
 set -o pipefail
@@ -16,8 +16,8 @@ cd "${PRJ_ROOT_PATH}" && echo + cd "${PWD}"
 CMD=(poetry run conan install)
 CMD+=(.)
 CMD+=("--output-folder=${BLD_PATH}")
-# CMD+=('--build="*"')
-CMD+=("--build=missing")
+CMD+=('--build="*"')
+# CMD+=("--build=missing")
 CMD+=("-pr:h=./utils/conan2/profiles/${COMPILER}-${COMPILER_VERSION}")
 CMD+=("-pr:b=./utils/conan2/profiles/${COMPILER}-${COMPILER_VERSION}")
 
