@@ -1,7 +1,19 @@
-## Hey Emacs, this is -*- coding: utf-8 -*-
-<%
-  project_name = utils.kebab_case(config["project_name"])
-%>\
+# Hey Emacs, this is -*- coding: utf-8 -*-
+
+from string import Template
+from typing import TYPE_CHECKING, ClassVar
+
+from autocodegen.utils import kebab_case
+
+if TYPE_CHECKING:
+    from autocodegen import Context
+
+
+class PercentTemplate(Template):  # noqa: D101
+    delimiter: ClassVar[str] = "%"
+
+
+template_str = """\
 ;; Hey Emacs, this is -*- coding: utf-8 -*-
 
 (require 'cl)
@@ -12,81 +24,81 @@
 (require 'lsp-javascript)
 (require 'clang-format)
 
-;;; ${project_name} common command
+;;; ${project_name_kebab} common command
 ;;; /b/{
 
-(defvar ${project_name}/build-buffer-name
-  "*${project_name}-build*")
+(defvar ${project_name_kebab}/build-buffer-name
+  "*${project_name_kebab}-build*")
 
-(defun ${project_name}/build-main ()
+(defun ${project_name_kebab}/build-main ()
   (interactive)
   (rh-project-compile
    "build-main.sh"
-   ${project_name}/build-buffer-name))
+   ${project_name_kebab}/build-buffer-name))
 
-(defun ${project_name}/run-main ()
+(defun ${project_name_kebab}/run-main ()
   (interactive)
   (rh-project-compile
    "run-main.sh"
-   ${project_name}/build-buffer-name))
+   ${project_name_kebab}/build-buffer-name))
 
-(defun ${project_name}/clang-check ()
+(defun ${project_name_kebab}/clang-check ()
   (interactive)
   (rh-project-compile
    "clang-check.sh"
-   ${project_name}/build-buffer-name))
+   ${project_name_kebab}/build-buffer-name))
 
-(defun ${project_name}/clang-tidy ()
+(defun ${project_name_kebab}/clang-tidy ()
   (interactive)
   (rh-project-compile
    "clang-tidy.sh"
-   ${project_name}/build-buffer-name))
+   ${project_name_kebab}/build-buffer-name))
 
-(defun ${project_name}/clean ()
+(defun ${project_name_kebab}/clean ()
   (interactive)
   (rh-project-compile
    "clean.sh"
-   ${project_name}/build-buffer-name))
+   ${project_name_kebab}/build-buffer-name))
 
-(defun ${project_name}/conan-install ()
+(defun ${project_name_kebab}/conan-install ()
   (interactive)
   (rh-project-compile
    "conan-install.sh"
-   ${project_name}/build-buffer-name))
+   ${project_name_kebab}/build-buffer-name))
 
-(defun ${project_name}/cmake ()
+(defun ${project_name_kebab}/cmake ()
   (interactive)
   (rh-project-compile
    "cmake.sh"
-   ${project_name}/build-buffer-name))
+   ${project_name_kebab}/build-buffer-name))
 
 ;;; /b/}
 
-;;; ${project_name}
+;;; ${project_name_kebab}
 ;;; /b/{
 
-(defun ${project_name}/hydra-define ()
-  (defhydra ${project_name}-hydra (:color blue :columns 4)
-    "@${project_name} workspace commands"
-    ;; ("l" ${project_name}/lint "lint")
-    ("b" ${project_name}/build-main "build-main")
-    ("r" ${project_name}/run-main "run-main")
-    ("k" ${project_name}/clang-check "clang-check")
-    ("t" ${project_name}/clang-tidy "clang-tidy")
-    ("c" ${project_name}/clean "clean")
-    ("i" ${project_name}/conan-install "conan-install")
-    ("m" ${project_name}/cmake "cmake")))
+(defun ${project_name_kebab}/hydra-define ()
+  (defhydra ${project_name_kebab}-hydra (:color blue :columns 4)
+    "@${project_name_kebab} workspace commands"
+    ;; ("l" ${project_name_kebab}/lint "lint")
+    ("b" ${project_name_kebab}/build-main "build-main")
+    ("r" ${project_name_kebab}/run-main "run-main")
+    ("k" ${project_name_kebab}/clang-check "clang-check")
+    ("t" ${project_name_kebab}/clang-tidy "clang-tidy")
+    ("c" ${project_name_kebab}/clean "clean")
+    ("i" ${project_name_kebab}/conan-install "conan-install")
+    ("m" ${project_name_kebab}/cmake "cmake")))
 
-(${project_name}/hydra-define)
+(${project_name_kebab}/hydra-define)
 
-(define-minor-mode ${project_name}-mode
-  "${project_name} project-specific minor mode."
-  :lighter " ${project_name}"
+(define-minor-mode ${project_name_kebab}-mode
+  "${project_name_kebab} project-specific minor mode."
+  :lighter " ${project_name_kebab}"
   :keymap (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "<f9>") #'${project_name}-hydra/body)
+            (define-key map (kbd "<f9>") #'${project_name_kebab}-hydra/body)
             map))
 
-(add-to-list 'rm-blacklist " ${project_name}")
+(add-to-list 'rm-blacklist " ${project_name_kebab}")
 
 (defvar lsp-clients-clangd-library-directories
   '("~/.conan2"
@@ -95,10 +107,10 @@
     "/usr/local/include"
     "/usr/local/lib"))
 
-(defvar ${project_name}/lsp-clients-clangd-args '())
+(defvar ${project_name_kebab}/lsp-clients-clangd-args '())
 
-(defun ${project_name}/lsp-clangd-init ()
-  (setq ${project_name}/lsp-clients-clangd-args
+(defun ${project_name_kebab}/lsp-clangd-init ()
+  (setq ${project_name_kebab}/lsp-clients-clangd-args
         (copy-sequence lsp-clients-clangd-args))
 
   (let ((clang-version ""))
@@ -110,7 +122,7 @@
                  (match-string 1 lsp-clients-clangd-executable))))
 
     (add-to-list
-     '${project_name}/lsp-clients-clangd-args
+     '${project_name_kebab}/lsp-clients-clangd-args
      (concat
       "--query-driver="
       (mapconcat
@@ -123,16 +135,16 @@
 
   ;; (add-hook
   ;;  'lsp-after-open-hook
-  ;;  #'${project_name}/company-capf-c++-local-disable)
+  ;;  #'${project_name_kebab}/company-capf-c++-local-disable)
 
   ;; (add-hook
   ;;  'lsp-after-initialize-hook
-  ;;  #'${project_name}/company-capf-c++-local-disable)
+  ;;  #'${project_name_kebab}/company-capf-c++-local-disable)
   )
 
-(eval-after-load 'lsp-mode #'${project_name}/lsp-clangd-init)
+(eval-after-load 'lsp-mode #'${project_name_kebab}/lsp-clangd-init)
 
-(defun ${project_name}-setup ()
+(defun ${project_name_kebab}-setup ()
   (when buffer-file-name
     (let ((project-root (rh-project-get-root))
           file-rpath ext-js)
@@ -149,7 +161,7 @@
             (when (featurep 'lsp-mode)
               (setq-local
                lsp-clients-clangd-args
-               (copy-sequence ${project_name}/lsp-clients-clangd-args))
+               (copy-sequence ${project_name_kebab}/lsp-clients-clangd-args))
 
               (add-to-list
                'lsp-clients-clangd-args
@@ -225,3 +237,14 @@
           (lsp-deferred)))))))
 
 ;;; /b/}
+"""
+
+
+def generate(ctx: Context) -> str:
+    project_name = ctx.template_config.project_name
+
+    return PercentTemplate(template_str).substitute(
+        {
+            "project_name_kebab": kebab_case(project_name),
+        },
+    )
